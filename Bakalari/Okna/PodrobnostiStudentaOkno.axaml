@@ -1,0 +1,15 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Bakalari.Okna.PodrobnostiStudentaOkno"
+        Width="500"
+        Height="400"
+        Title="Detail studenta">
+
+    <StackPanel Margin="30">
+
+        <TextBlock Text="Detail studenta"
+                   FontSize="24"/>
+
+    </StackPanel>
+
+</Window>

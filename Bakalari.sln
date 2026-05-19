@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bakalari", "Bakalari\Bakalari.csproj", "{9E68F35D-5491-496A-A694-80E93B3A227F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9E68F35D-5491-496A-A694-80E93B3A227F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E68F35D-5491-496A-A694-80E93B3A227F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E68F35D-5491-496A-A694-80E93B3A227F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E68F35D-5491-496A-A694-80E93B3A227F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

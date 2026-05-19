@@ -1,0 +1,29 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Bakalari.MainWindow"
+        Title="Bakalari">
+        <StackPanel Margin="20" Spacing="30">
+
+                <TextBlock Text="Evidence studentů"
+                           FontSize="28"/>
+
+                <ListBox Name="StudentListBox" 
+                         Height="250"/>
+
+                <StackPanel HorizontalAlignment="Left" Spacing="30">
+
+                        <Button Name="PridatStudentaButton"
+                                Content="Přidat studenta"
+                                Width="150"/>
+
+                        <Button Name="DetailButton" 
+                                Content="Detail"
+                                Width="100"/>
+
+                </StackPanel>
+
+        </StackPanel>
+</Window>
