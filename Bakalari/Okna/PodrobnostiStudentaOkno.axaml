@@ -5,11 +5,18 @@
         Height="400"
         Title="Detail studenta">
 
-    <StackPanel Margin="30">
-
+    <StackPanel Margin="30" Spacing="10">
         <TextBlock Text="Detail studenta"
                    FontSize="24"/>
+  <TextBlock Name="JmenoText"
+                   FontSize="16"/>
+     <TextBlock Name="PrumerText"
+                   FontSize="16"/>
+
+  <TextBlock Text="Seznam známek:"
+                   FontSize="14"/>
+ <ListBox Name="ZnamkyListBox"
+                 Height="200"/>
 
     </StackPanel>
-
 </Window>

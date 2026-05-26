@@ -2,13 +2,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Bakalari.Okna.PridaniZnamekOkno"
         Width="400"
-        Height="250"
+        Height="320"
         Title="Přidání známky">
 
     <StackPanel Margin="20" Spacing="10">
 
         <TextBlock Name="StudentJmenoText"
                    FontSize="18"/>
+
+        <TextBlock Text="Dosavadní známky:"
+                   FontSize="14"/>
+
+        <ListBox Name="ZnamkyListBox"
+                 Height="80"/>
 
         <TextBox Name="ZnamkaTextBox"
                  Watermark="Zadej známku (1-5)"/>

@@ -5,25 +5,29 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Bakalari.MainWindow"
         Title="Bakalari">
-        <StackPanel Margin="20" Spacing="30">
+    <StackPanel Margin="20" Spacing="30">
 
-                <TextBlock Text="Evidence studentů"
-                           FontSize="28"/>
+        <TextBlock Text="Evidence studentů"
+                   FontSize="28"/>
 
-                <ListBox Name="StudentListBox" 
-                         Height="250"/>
+        <ListBox Name="StudentListBox" 
+                 Height="250"/>
 
-                <StackPanel HorizontalAlignment="Left" Spacing="30">
+        <StackPanel HorizontalAlignment="Left" Spacing="10" Orientation="Horizontal">
 
-                        <Button Name="PridatStudentaButton"
-                                Content="Přidat studenta"
-                                Width="150"/>
+            <Button Name="PridatStudentaButton"
+                    Content="Přidat studenta"
+                    Width="150"/>
 
-                        <Button Name="DetailButton" 
-                                Content="Detail"
-                                Width="100"/>
+            <Button Name="PridatZnamkuButton"
+                    Content="Přidat známku"
+                    Width="150"/>
 
-                </StackPanel>
+            <Button Name="DetailButton" 
+                    Content="Detail studenta"
+                    Width="150"/>
 
         </StackPanel>
+
+    </StackPanel>
 </Window>

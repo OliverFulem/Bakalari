@@ -13,6 +13,7 @@ public partial class PridaniZnamekOkno : Window
 
         _student = student;
         StudentJmenoText.Text = $"{student.Jmeno} {student.Prijmeni}";
+        ZnamkyListBox.ItemsSource = _student.Znamky;
 
         SaveButton.Click += (sender, e) =>
         {
@@ -21,7 +22,9 @@ public partial class PridaniZnamekOkno : Window
                 return;
 
             _student.Znamky.Add(znamka);
-            Close();
+            ZnamkyListBox.ItemsSource = null;
+            ZnamkyListBox.ItemsSource = _student.Znamky;
+            ZnamkaTextBox.Text = string.Empty;
         };
     }
 }
