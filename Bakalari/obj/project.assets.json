@@ -1652,19 +1652,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\olive\\.nuget\\packages\\": {}
+    "C:\\Users\\fchlu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\olive\\RiderProjects\\Bakalari\\Bakalari\\Bakalari.csproj",
+      "projectUniqueName": "C:\\Users\\fchlu\\Bakalari\\Bakalari\\Bakalari.csproj",
       "projectName": "Bakalari",
-      "projectPath": "C:\\Users\\olive\\RiderProjects\\Bakalari\\Bakalari\\Bakalari.csproj",
-      "packagesPath": "C:\\Users\\olive\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\olive\\RiderProjects\\Bakalari\\Bakalari\\obj\\",
+      "projectPath": "C:\\Users\\fchlu\\Bakalari\\Bakalari\\Bakalari.csproj",
+      "packagesPath": "C:\\Users\\fchlu\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fchlu\\Bakalari\\Bakalari\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\olive\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\fchlu\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -1688,7 +1688,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net9.0": {
@@ -1726,30 +1726,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[9.0.13, 9.0.13]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[9.0.13, 9.0.13]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\olive\\.dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\fchlu\\.dotnet\\sdk\\9.0.314/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

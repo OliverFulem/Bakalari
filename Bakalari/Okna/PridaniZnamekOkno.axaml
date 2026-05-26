@@ -5,4 +5,17 @@
         Height="250"
         Title="Přidání známky">
 
+    <StackPanel Margin="20" Spacing="10">
+
+        <TextBlock Name="StudentJmenoText"
+                   FontSize="18"/>
+
+        <TextBox Name="ZnamkaTextBox"
+                 Watermark="Zadej známku (1-5)"/>
+
+        <Button Name="SaveButton"
+                Content="Uložit"/>
+
+    </StackPanel>
+
 </Window>

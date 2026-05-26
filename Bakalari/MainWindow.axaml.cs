@@ -1,39 +1,36 @@
-using System.Collections.Generic;
 using Avalonia.Controls;
+using Bakalari.Okna;
 using Bakalari.Tridy;
+using System.Collections.ObjectModel;
 
 namespace Bakalari;
 
 public partial class MainWindow : Window
 {
-    private List<Student> studenti = new();
+    private ObservableCollection<Student> _studenti = new();
 
     public MainWindow()
     {
         InitializeComponent();
 
-        studenti.Add(new Student
-        {
-            Jmeno = "Jan",
-            Prijmeni = "Novák",
-            Znamky = new List<float> { 1, 2, 1 }
-        });
+        StudentListBox.ItemsSource = _studenti;
 
-        studenti.Add(new Student
+        PridatStudentaButton.Click += async (sender, e) =>
         {
-            Jmeno = "Petr",
-            Prijmeni = "Svoboda",
-            Znamky = new List<float> { 2, 3, 2 }
-        });
-        
-        studenti.Add(new Student
-        {
-            Jmeno = "Adam",
-            Prijmeni = "Témen ",
-            Znamky = new List<float> { 4,5, 4, 5 }
-        });
-        
+            var okno = new PridaniStudentaOkno();
+            await okno.ShowDialog(this);
 
-        StudentListBox.ItemsSource = studenti;
+            if (okno.NovyStudent != null)
+                _studenti.Add(okno.NovyStudent);
+        };
+
+        DetailButton.Click += async (sender, e) =>
+        {
+            if (StudentListBox.SelectedItem is Student vybranýStudent)
+            {
+                var okno = new PridaniZnamekOkno(vybranýStudent);
+                await okno.ShowDialog(this);
+            }
+        };
     }
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Bakalari")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a7ae820a086fb054a75efd6cd6c090710bdfb85")]
 [assembly: System.Reflection.AssemblyProductAttribute("Bakalari")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Bakalari")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
