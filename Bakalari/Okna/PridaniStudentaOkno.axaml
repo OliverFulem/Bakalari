@@ -1,24 +1,44 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="Bakalari.Okna.PridaniStudentaOkno"
-        Width="400"
-        Height="250"
-        Title="Přidání studenta">
+        Width="520"
+        SizeToContent="Height"
+        Title="Nový student"
+        Background="#F9F9F9">
 
-    <StackPanel Margin="20" Spacing="10">
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#2D5A27"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+    </Window.Styles>
 
-        <TextBlock Text="Přidání studenta"
-                   FontSize="24"/>
+    <StackPanel Margin="30" Spacing="15">
+        <TextBlock Text="Nový student" FontSize="24" FontWeight="Bold" Foreground="#2D5A27"/>
 
-        <TextBox Name="NameTextBox"
-                 Watermark="Jméno"/>
+        <StackPanel Spacing="5">
+            <TextBlock Text="Jméno:" FontSize="14" Foreground="#555"/>
+            <TextBox Name="NameTextBox" PlaceholderText="Zadejte jméno" FontSize="16"/>
+        </StackPanel>
 
-        <TextBox Name="SurnameTextBox"
-                 Watermark="Příjmení"/>
+        <StackPanel Spacing="5">
+            <TextBlock Text="Příjmení:" FontSize="14" Foreground="#555"/>
+            <TextBox Name="SurnameTextBox" PlaceholderText="Zadejte příjmení" FontSize="16"/>
+        </StackPanel>
 
-        <Button Name="SaveButton"
-                Content="Uložit"/>
+        <StackPanel Spacing="5">
+            <TextBlock Text="Třída:" FontSize="14" Foreground="#555"/>
+            <ComboBox Name="ClassComboBox" HorizontalAlignment="Stretch"/>
+        </StackPanel>
 
+        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="10">
+            <Button Grid.Column="0" Name="ImportButton" Content="Importovat ze souboru (.txt)" Background="#555" HorizontalAlignment="Stretch"/>
+            <Button Grid.Column="1" Name="AddButton" Content="Přidat" Width="100"/>
+            <Button Grid.Column="2" Name="CloseButton" Content="Zavřít" Background="#888" Width="100"/>
+        </Grid>
+
+        <TextBlock Name="StatusText" FontSize="12" Foreground="#888"/>
     </StackPanel>
-
 </Window>

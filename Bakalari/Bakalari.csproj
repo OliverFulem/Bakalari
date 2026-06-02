@@ -20,5 +20,6 @@
 
     <ItemGroup>
       <Folder Include="Logika\" />
+      <AvaloniaResource Include="icon-letter-b-100.png"/>
     </ItemGroup>
 </Project>

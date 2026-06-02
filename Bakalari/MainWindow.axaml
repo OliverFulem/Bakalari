@@ -2,32 +2,125 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:tridy="clr-namespace:Bakalari.Tridy"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Bakalari.MainWindow"
-        Title="Bakalari">
-    <StackPanel Margin="20" Spacing="30">
+        Title="Bakaláři - Evidence studentů"
+        Icon="avares://Bakalari/icon-letter-b-100.png"
+        Background="#F4F4F9">
 
-        <TextBlock Text="Evidence studentů"
-                   FontSize="28"/>
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#2D5A27"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#3E7A36"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style Selector="Border.failing">
+            <Setter Property="Background" Value="#E57373"/>
+        </Style>
+        <Style Selector="Border.ok">
+            <Setter Property="Background" Value="#81C784"/>
+        </Style>
+    </Window.Styles>
 
-        <ListBox Name="StudentListBox" 
-                 Height="250"/>
+    <Grid RowDefinitions="Auto, *, Auto, Auto" Margin="25">
 
-        <StackPanel HorizontalAlignment="Left" Spacing="10" Orientation="Horizontal">
+        <!-- Záhlaví -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,20">
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Informační systém Bakaláři"
+                           FontSize="32" FontWeight="Bold" Foreground="#2D5A27"/>
+                <TextBlock Text="Evidence studentů a klasifikace"
+                           FontSize="16" Foreground="#666"/>
+            </StackPanel>
 
-            <Button Name="PridatStudentaButton"
-                    Content="Přidat studenta"
-                    Width="150"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Hledat:" VerticalAlignment="Center" Foreground="#666"/>
+                <TextBox Name="SearchTextBox" Width="170" PlaceholderText="Jméno nebo příjmení…" VerticalContentAlignment="Center"/>
 
-            <Button Name="PridatZnamkuButton"
-                    Content="Přidat známku"
-                    Width="150"/>
+                <TextBlock Text="Filtr tříd:" VerticalAlignment="Center" Foreground="#666" Margin="10,0,0,0"/>
+                <ComboBox Name="ClassFilterComboBox" Width="120"/>
 
-            <Button Name="DetailButton" 
-                    Content="Detail studenta"
-                    Width="150"/>
+                <TextBlock Text="Seřadit:" VerticalAlignment="Center" Foreground="#666" Margin="10,0,0,0"/>
+                <ComboBox Name="SortComboBox" Width="130">
+                    <ComboBoxItem Content="Příjmení"/>
+                    <ComboBoxItem Content="Průměru"/>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
 
+        <!-- Hlavní obsah -->
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl Name="ClassGroupControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="tridy:ClassGroup">
+                        <Expander HorizontalAlignment="Stretch" Margin="0,0,0,10" IsExpanded="True">
+                            <Expander.Header>
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <StackPanel Orientation="Horizontal" Spacing="10">
+                                        <TextBlock Text="{Binding ClassName}" FontWeight="Bold" FontSize="18"/>
+                                        <TextBlock Text="{Binding StudentCount, StringFormat=({0} studentů)}" VerticalAlignment="Center" Foreground="#666"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                                        <TextBlock Text="Průměr třídy:" FontSize="12" Foreground="#888" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding ClassAverage, StringFormat={}{0:0.00}}" FontWeight="SemiBold" Foreground="#2D5A27"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Expander.Header>
+                            <ListBox ItemsSource="{Binding Students}"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     SelectionChanged="StudentListBox_SelectionChanged">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="tridy:Student">
+                                        <Grid ColumnDefinitions="*, Auto">
+                                            <StackPanel Grid.Column="0" Spacing="2">
+                                                <TextBlock Text="{Binding FullInfo}" FontSize="16" Foreground="#333"/>
+                                                <StackPanel Orientation="Horizontal" Spacing="5" IsVisible="{Binding JeProspechOhrozen}">
+                                                    <Path Data="M12 2L1 21h22L12 2zm0 3.45L19.53 19H4.47L12 5.45zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"
+                                                          Fill="OrangeRed" Width="16" Height="16" Stretch="Uniform"/>
+                                                    <TextBlock Text="Upozornění: Prospěch je ohrožen!"
+                                                               Foreground="OrangeRed" FontSize="12"
+                                                               FontStyle="Italic" FontWeight="SemiBold"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Border Grid.Column="1"
+                                                    Classes.failing="{Binding JeProspechOhrozen}"
+                                                    Classes.ok="{Binding !JeProspechOhrozen}"
+                                                    Padding="10,4" CornerRadius="15" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding CelkovyPrumer, StringFormat={}{0:0.00}}"
+                                                           Foreground="White" FontWeight="Bold"/>
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- Akce -->
+        <StackPanel Grid.Row="2" Margin="0,20,0,0" HorizontalAlignment="Center" Spacing="15" Orientation="Horizontal">
+            <Button Name="PridatStudentaButton" Content="Nový student" Width="140"/>
+            <Button Name="PridatZnamkuButton" Content="Zadat známky" Width="140"/>
+            <Button Name="DetailButton" Content="Detail a historie" Width="140"/>
+            <Button Name="ExportButton" Content="Exportovat CSV" Width="140" Background="#1565C0"/>
+            <Button Name="SettingsButton" Content="Nastavení" Width="140" Background="#555"/>
         </StackPanel>
 
-    </StackPanel>
+        <!-- Stavový řádek -->
+        <Border Grid.Row="3" Name="StatusBar"
+                Padding="12,6" Margin="0,8,0,0" CornerRadius="4"
+                Background="Transparent">
+            <TextBlock Name="StatusText" FontSize="12"/>
+        </Border>
+
+    </Grid>
 </Window>
