@@ -1,0 +1,34 @@
+# Výstupní složky .NET buildu
+bin/
+obj/
+
+# Uživatelská nastavení Visual Studia
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# JetBrains Rider
+.idea/
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Výstupy publikování
+publish/
+
+# Zálohy a dočasné soubory editoru
+*~
+*.swp
+*.orig
+*.bak
+
+# Systémové soubory Windows
+Thumbs.db
+Desktop.ini
+
+# Systémové soubory macOS
+.DS_Store

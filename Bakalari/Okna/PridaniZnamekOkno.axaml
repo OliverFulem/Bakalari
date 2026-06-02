@@ -1,27 +1,115 @@
-﻿<Window xmlns="https://github.com/avaloniaui"
+<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:tridy="clr-namespace:Bakalari.Tridy"
         x:Class="Bakalari.Okna.PridaniZnamekOkno"
-        Width="400"
-        Height="320"
-        Title="Přidání známky">
+        Width="750"
+        SizeToContent="Height"
+        Title="Zadávání známek"
+        Background="#F9F9F9">
 
-    <StackPanel Margin="20" Spacing="10">
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#2D5A27"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="#E57373"/>
+        </Style>
+        <Style Selector="ListBoxItem">
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+    </Window.Styles>
 
-        <TextBlock Name="StudentJmenoText"
-                   FontSize="18"/>
+    <StackPanel Margin="25" Spacing="15">
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <TextBlock Name="StudentJmenoText" FontSize="22" FontWeight="Bold" Foreground="#2D5A27"/>
+            <Border Background="#EEE" CornerRadius="4" Padding="5,2" VerticalAlignment="Center">
+                <TextBlock Name="StudentTridaText" FontSize="14" Foreground="#555"/>
+            </Border>
+        </StackPanel>
 
-        <TextBlock Text="Dosavadní známky:"
-                   FontSize="14"/>
+        <TextBlock Text="Seznam známek:" FontSize="14" FontWeight="SemiBold" Foreground="#555"/>
 
-        <ListBox Name="ZnamkyListBox"
-                 Height="80"/>
+        <Border Background="White" CornerRadius="4" BorderBrush="#DDD" BorderThickness="1">
+            <ListBox Name="ZnamkyListBox" Height="190" Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="tridy:Znamka">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0" HorizontalAlignment="Center" Spacing="1">
+                                <Border Width="32" Height="32" CornerRadius="16" Tag="{Binding Hodnota}">
+                                    <Border.Styles>
+                                        <Style Selector="Border">
+                                            <Setter Property="Background" Value="#EEE"/>
+                                        </Style>
+                                        <Style Selector="Border[Tag=5]">
+                                            <Setter Property="Background" Value="#E57373"/>
+                                        </Style>
+                                        <Style Selector="Border[Tag=5] TextBlock">
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Style>
+                                    </Border.Styles>
+                                    <TextBlock Text="{Binding Hodnota}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               FontWeight="Bold"/>
+                                </Border>
+                                <TextBlock Text="{Binding VahaText}" FontSize="10" Foreground="#888" HorizontalAlignment="Center"/>
+                            </StackPanel>
 
-        <TextBox Name="ZnamkaTextBox"
-                 Watermark="Zadej známku (1-5)"/>
+                            <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Predmet.Nazev}" FontSize="14"/>
+                                <TextBlock Text="{Binding MetadataText}" FontSize="11" Foreground="#888" FontStyle="Italic"/>
+                            </StackPanel>
 
-        <Button Name="SaveButton"
-                Content="Uložit"/>
+                            <Button Grid.Column="2" Content="Smazat" Classes="danger" FontSize="10"
+                                    Click="DeleteMark_Click" Tag="{Binding}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
 
+        <!-- Input form -->
+        <StackPanel Spacing="10">
+            <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="10">
+                <StackPanel Grid.Column="0" Spacing="5">
+                    <TextBlock Text="Předmět:" FontSize="14"/>
+                    <ComboBox Name="PredmetComboBox" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Spacing="5">
+                    <TextBlock Text="Datum:" FontSize="14"/>
+                    <DatePicker Name="DatumPicker" DayFormat="ddd dd"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Spacing="5">
+                    <TextBlock Text="Známka (1–5):" FontSize="14"/>
+                    <TextBox Name="ZnamkaTextBox" PlaceholderText="Např. 1" Width="80"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Spacing="5">
+                    <TextBlock Text="Váha:" FontSize="14"/>
+                    <ComboBox Name="VahaPicker" Width="75"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Spacing="5">
+                <TextBlock Text="Poznámka (téma, druh zkoušení, …):" FontSize="14"/>
+                <TextBox Name="PoznamkaTextBox" PlaceholderText="Např. Písemka z rovnic" MaxLength="200"/>
+            </StackPanel>
+
+            <TextBlock Name="ValidationErrorText"
+                       Text="Vyberte předmět a zadejte správnou známku (1–5)."
+                       Foreground="OrangeRed"
+                       FontSize="12"
+                       IsVisible="False"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+            <Button Name="CloseButton" Content="Zavřít" Background="#888" Width="100"/>
+            <Button Name="SaveButton" Content="Přidat" Width="100"/>
+        </StackPanel>
     </StackPanel>
-
 </Window>
