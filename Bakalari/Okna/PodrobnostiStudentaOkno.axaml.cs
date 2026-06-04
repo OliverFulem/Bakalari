@@ -70,6 +70,24 @@ public partial class PodrobnostiStudentaOkno : Window
         WarningBorder.IsVisible = student.JeProspechOhrozen;
 
         CloseButton.Click += (sender, e) => Close();
+        
+        // this.KeyDown += (sender, e) =>
+        // {
+        //     if (e.Key == Avalonia.Input.Key.Enter)
+        //     {
+        //         e.Handled = true;
+        //         ();
+        //     }
+        // };
+        
+        this.KeyDown += (sender, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Escape)
+            {
+                e.Handled = true;
+                Close();
+            }
+        };
     }
 
     /// <summary>

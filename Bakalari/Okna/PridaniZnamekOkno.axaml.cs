@@ -54,7 +54,20 @@ public partial class PridaniZnamekOkno : Window
         ZnamkaTextBox.KeyDown += (sender, e) =>
         {
             if (e.Key == Avalonia.Input.Key.Enter)
+            {
+                e.Handled = true;
                 UlozitZnamku();
+            }
+        };
+
+        // Esc kdekoli v okně zavře aplikaci / dialog.
+        this.KeyDown += (sender, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Escape)
+            {
+                e.Handled = true;
+                Close();
+            }
         };
     }
 
