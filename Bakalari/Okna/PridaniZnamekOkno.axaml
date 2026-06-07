@@ -5,7 +5,8 @@
         Width="750"
         SizeToContent="Height"
         Title="Zadávání známek"
-        Background="#F9F9F9">
+        Icon="avares://Bakalari/icon-letter-b-100.png"
+        Background="{DynamicResource PanelPozadi}">
 
     <Window.Styles>
         <Style Selector="Button">
@@ -25,14 +26,14 @@
     <StackPanel Margin="25" Spacing="15">
         <StackPanel Orientation="Horizontal" Spacing="10">
             <TextBlock Name="StudentJmenoText" FontSize="22" FontWeight="Bold" Foreground="#2D5A27"/>
-            <Border Background="#EEE" CornerRadius="4" Padding="5,2" VerticalAlignment="Center">
-                <TextBlock Name="StudentTridaText" FontSize="14" Foreground="#555"/>
+            <Border Background="{DynamicResource OkrajBarva}" CornerRadius="4" Padding="5,2" VerticalAlignment="Center">
+                <TextBlock Name="StudentTridaText" FontSize="14" Foreground="{DynamicResource TextSecondary}"/>
             </Border>
         </StackPanel>
 
-        <TextBlock Text="Seznam známek:" FontSize="14" FontWeight="SemiBold" Foreground="#555"/>
+        <TextBlock Text="Seznam známek:" FontSize="14" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondary}"/>
 
-        <Border Background="White" CornerRadius="4" BorderBrush="#DDD" BorderThickness="1">
+        <Border Background="{DynamicResource KartaPozadi}" CornerRadius="4" BorderBrush="{DynamicResource OkrajBarva}" BorderThickness="1">
             <ListBox Name="ZnamkyListBox" Height="190" Background="Transparent">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="tridy:Znamka">
@@ -41,7 +42,7 @@
                                 <Border Width="32" Height="32" CornerRadius="16" Tag="{Binding Hodnota}">
                                     <Border.Styles>
                                         <Style Selector="Border">
-                                            <Setter Property="Background" Value="#EEE"/>
+                                            <Setter Property="Background" Value="{DynamicResource ZnamkaKruzekPozadi}"/>
                                         </Style>
                                         <Style Selector="Border[Tag=5]">
                                             <Setter Property="Background" Value="#E57373"/>
@@ -55,12 +56,12 @@
                                                HorizontalAlignment="Center"
                                                FontWeight="Bold"/>
                                 </Border>
-                                <TextBlock Text="{Binding VahaText}" FontSize="10" Foreground="#888" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding VahaText}" FontSize="10" Foreground="{DynamicResource TextHint}" HorizontalAlignment="Center"/>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
                                 <TextBlock Text="{Binding Predmet.Nazev}" FontSize="14"/>
-                                <TextBlock Text="{Binding MetadataText}" FontSize="11" Foreground="#888" FontStyle="Italic"/>
+                                <TextBlock Text="{Binding MetadataText}" FontSize="11" Foreground="{DynamicResource TextHint}" FontStyle="Italic"/>
                             </StackPanel>
 
                             <Button Grid.Column="2" Content="Smazat" Classes="danger" FontSize="10"

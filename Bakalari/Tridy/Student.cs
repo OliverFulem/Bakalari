@@ -71,7 +71,6 @@ public class Student : INotifyPropertyChanged
             OnPropertyChanged(nameof(FullInfo));
             OnPropertyChanged(nameof(JeProspechOhrozen));
             OnPropertyChanged(nameof(PrumeryPoPredmetech));
-            
         };
     }
 

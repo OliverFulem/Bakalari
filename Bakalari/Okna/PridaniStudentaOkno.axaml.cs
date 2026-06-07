@@ -39,30 +39,14 @@ public partial class PridaniStudentaOkno : Window
         AddButton.Click += (sender, e) => PridatStudenta();
         CloseButton.Click += (sender, e) => Close();
 
-        
+        // Enter v textovém poli funguje stejně jako kliknutí na tlačítko Přidat.
         NameTextBox.KeyDown += (sender, e) =>
         {
-            if (e.Key == Avalonia.Input.Key.Enter)
-            {
-                e.Handled = true;
-                PridatStudenta();
-            }
+            if (e.Key == Avalonia.Input.Key.Enter) PridatStudenta();
         };
         SurnameTextBox.KeyDown += (sender, e) =>
         {
-            if (e.Key == Avalonia.Input.Key.Enter)
-            {
-                e.Handled = true;
-                PridatStudenta();
-            }
-        };
-        this.KeyDown += (sender, e) =>
-        {
-            if (e.Key == Avalonia.Input.Key.Escape)
-            {
-                e.Handled = true;
-                Close();
-            }
+            if (e.Key == Avalonia.Input.Key.Enter) PridatStudenta();
         };
 
         ImportButton.Click += async (sender, e) =>

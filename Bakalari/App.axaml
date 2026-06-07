@@ -1,9 +1,50 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="Bakalari.App">
+             x:Class="Bakalari.App"
+             RequestedThemeVariant="Default">
 
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+
+    <!--
+        Sémantické barvy aplikace – definovány pro světlý i tmavý motiv.
+        V AXAML souborech je používáme přes {DynamicResource NazevBarvy},
+        aby se automaticky přizpůsobily systémovému nastavení.
+    -->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+
+                <ResourceDictionary x:Key="Light">
+                    <!-- Pozadí oken a panelů -->
+                    <SolidColorBrush x:Key="AppPozadi">#F4F4F9</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelPozadi">#F9F9F9</SolidColorBrush>
+                    <!-- Pozadí bílých karet a seznamů -->
+                    <SolidColorBrush x:Key="KartaPozadi">White</SolidColorBrush>
+                    <!-- Textové barvy -->
+                    <SolidColorBrush x:Key="TextPrimary">#1A1A1A</SolidColorBrush>
+                    <SolidColorBrush x:Key="TextSecondary">#555555</SolidColorBrush>
+                    <SolidColorBrush x:Key="TextHint">#888888</SolidColorBrush>
+                    <!-- Barva rámečků a oddělovačů -->
+                    <SolidColorBrush x:Key="OkrajBarva">#E0E0E0</SolidColorBrush>
+                    <!-- Pozadí kroužků se známkami -->
+                    <SolidColorBrush x:Key="ZnamkaKruzekPozadi">#F0F0F0</SolidColorBrush>
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="AppPozadi">#1C1C1C</SolidColorBrush>
+                    <SolidColorBrush x:Key="PanelPozadi">#242424</SolidColorBrush>
+                    <SolidColorBrush x:Key="KartaPozadi">#2D2D2D</SolidColorBrush>
+                    <SolidColorBrush x:Key="TextPrimary">#E8E8E8</SolidColorBrush>
+                    <SolidColorBrush x:Key="TextSecondary">#BBBBBB</SolidColorBrush>
+                    <SolidColorBrush x:Key="TextHint">#888888</SolidColorBrush>
+                    <SolidColorBrush x:Key="OkrajBarva">#3D3D3D</SolidColorBrush>
+                    <SolidColorBrush x:Key="ZnamkaKruzekPozadi">#4A4A4A</SolidColorBrush>
+                </ResourceDictionary>
+
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
 
 </Application>

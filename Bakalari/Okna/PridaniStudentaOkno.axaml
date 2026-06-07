@@ -4,7 +4,8 @@
         Width="520"
         SizeToContent="Height"
         Title="Nový student"
-        Background="#F9F9F9">
+        Icon="avares://Bakalari/icon-letter-b-100.png"
+        Background="{DynamicResource PanelPozadi}">
 
     <Window.Styles>
         <Style Selector="Button">
@@ -19,17 +20,17 @@
         <TextBlock Text="Nový student" FontSize="24" FontWeight="Bold" Foreground="#2D5A27"/>
 
         <StackPanel Spacing="5">
-            <TextBlock Text="Jméno:" FontSize="14" Foreground="#555"/>
+            <TextBlock Text="Jméno:" FontSize="14" Foreground="{DynamicResource TextSecondary}"/>
             <TextBox Name="NameTextBox" PlaceholderText="Zadejte jméno" FontSize="16"/>
         </StackPanel>
 
         <StackPanel Spacing="5">
-            <TextBlock Text="Příjmení:" FontSize="14" Foreground="#555"/>
+            <TextBlock Text="Příjmení:" FontSize="14" Foreground="{DynamicResource TextSecondary}"/>
             <TextBox Name="SurnameTextBox" PlaceholderText="Zadejte příjmení" FontSize="16"/>
         </StackPanel>
 
         <StackPanel Spacing="5">
-            <TextBlock Text="Třída:" FontSize="14" Foreground="#555"/>
+            <TextBlock Text="Třída:" FontSize="14" Foreground="{DynamicResource TextSecondary}"/>
             <ComboBox Name="ClassComboBox" HorizontalAlignment="Stretch"/>
         </StackPanel>
 
@@ -39,6 +40,6 @@
             <Button Grid.Column="2" Name="CloseButton" Content="Zavřít" Background="#888" Width="100"/>
         </Grid>
 
-        <TextBlock Name="StatusText" FontSize="12" Foreground="#888"/>
+        <TextBlock Name="StatusText" FontSize="12" Foreground="{DynamicResource TextHint}"/>
     </StackPanel>
 </Window>
