@@ -6,7 +6,8 @@
         SizeToContent="Height"
         MinHeight="400"
         Title="Nastavení školy"
-        Background="#F9F9F9">
+        Icon="avares://Bakalari/icon-letter-b-100.png"
+        Background="{DynamicResource PanelPozadi}">
 
     <Window.Styles>
         <Style Selector="Button">
@@ -42,7 +43,7 @@
         <!-- Subjects per Class -->
         <StackPanel Spacing="10">
             <TextBlock Text="Předměty pro vybranou třídu:" FontWeight="SemiBold" FontSize="16"/>
-            <TextBlock Text="Změny se aplikují na třídu vybranou v seznamu výše." FontSize="12" FontStyle="Italic" Foreground="#666"/>
+            <TextBlock Text="Změny se aplikují na třídu vybranou v seznamu výše." FontSize="12" FontStyle="Italic" Foreground="{DynamicResource TextSecondary}"/>
             
             <Grid ColumnDefinitions="*, Auto" ColumnSpacing="10">
                 <TextBox Name="NewSubjectTextBox" PlaceholderText="Nový předmět..."/>
@@ -57,12 +58,12 @@
         <!-- Data export / import -->
         <StackPanel Spacing="10">
             <TextBlock Text="Záloha a obnova dat:" FontWeight="SemiBold" FontSize="16"/>
-            <TextBlock Text="Export uloží veškerá data do JSON souboru. Import data nahradí." FontSize="12" FontStyle="Italic" Foreground="#666"/>
+            <TextBlock Text="Export uloží veškerá data do JSON souboru. Import data nahradí." FontSize="12" FontStyle="Italic" Foreground="{DynamicResource TextSecondary}"/>
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <Button Name="ExportDataButton" Content="Exportovat data (.json)" Background="#1565C0" Width="200"/>
                 <Button Name="ImportDataButton" Content="Importovat data (.json)" Background="#0D47A1" Width="200"/>
             </StackPanel>
-            <TextBlock Name="DataStatusText" FontSize="12" Foreground="#555"/>
+            <TextBlock Name="DataStatusText" FontSize="12" Foreground="{DynamicResource TextSecondary}"/>
         </StackPanel>
 
         <Button Name="CloseButton" Content="Zavřít a uložit" HorizontalAlignment="Center" Width="200" Margin="0,10,0,0"/>

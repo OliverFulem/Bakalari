@@ -3,9 +3,10 @@
         xmlns:tridy="clr-namespace:Bakalari.Tridy"
         x:Class="Bakalari.Okna.PodrobnostiStudentaOkno"
         Width="700"
-        Height="700"
+        Height="900"
         Title="Detail studenta"
-        Background="#F4F4F9">
+        Icon="avares://Bakalari/icon-letter-b-100.png"
+        Background="{DynamicResource AppPozadi}">
 
     <Window.Styles>
         <Style Selector="Border.ohrozen">
@@ -15,18 +16,16 @@
         <Style Selector="Button.danger">
             <Setter Property="Background" Value="#E57373"/>
         </Style>
-
-        <!-- Vizuální stav vybraného předmětu – zelený rámeček a světlé pozadí -->
         <Style Selector="Border.vybrano">
             <Setter Property="BorderBrush" Value="#2D5A27"/>
-            <Setter Property="Background" Value="#E8F5E9"/>
+            <Setter Property="Background" Value="#6B8B9B"/>
         </Style>
-        <!-- Pokud je předmět ohrožen A zároveň vybrán, zvýrazníme červeně -->
+        <Style Selector="Border.vybrano TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
         <Style Selector="Border.ohrozen.vybrano">
             <Setter Property="BorderBrush" Value="#C62828"/>
         </Style>
-
-        <!-- Potlačíme výchozí modré zvýraznění výběru ListBoxu – stav řídíme sami přes Border.vybrano -->
         <Style Selector="ListBox#SubjectAveragesListBox ListBoxItem">
             <Setter Property="Padding" Value="0"/>
         </Style>
@@ -38,75 +37,91 @@
         </Style>
     </Window.Styles>
 
+    <!-- Vnější mřížka: záhlaví | obsah | patička -->
     <Grid RowDefinitions="Auto, *, Auto" Margin="30">
 
-        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,20">
-            <StackPanel Spacing="5">
-                <TextBlock Text="Karta studenta" FontSize="28" FontWeight="Bold" Foreground="#2D5A27"/>
-                <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Name="JmenoText" FontSize="18" Foreground="#333"/>
+        <!-- Záhlaví: jméno, průměr, varování, třída, smazání -->
+        <Grid Grid.Row="0" ColumnDefinitions="*, Auto" Margin="0,0,0,15">
+            <StackPanel Grid.Column="0" Spacing="6">
+                <TextBlock Name="JmenoText" FontSize="28" FontWeight="Bold" Foreground="#2D5A27"/>
+                <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+
+                    <!-- Průměr jako zelený odznak -->
+					<StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
+                        <TextBlock Text="Průměr:" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextHint}"/>
+						<Border Background="#2D5A27" CornerRadius="6" Padding="10,3" VerticalAlignment="Center">
+							<TextBlock Name="PrumerText" FontSize="20" FontWeight="Bold" Foreground="White"/>
+						</Border>
+					</StackPanel>
+
+                    <!-- Varování – skryté, pokud prospěch není ohrožen -->
+                    <Border Name="WarningBorder"
+                            Background="#FFF3E0" BorderBrush="#FFE0B2" BorderThickness="1"
+                            CornerRadius="4" Padding="7,3" VerticalAlignment="Center" IsVisible="False">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <Path Data="M12 2L1 21h22L12 2zm0 3.45L19.53 19H4.47L12 5.45zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"
+                                  Fill="#F57C00" Width="13" Height="13" Stretch="Uniform"/>
+                            <TextBlock Text="OHROŽEN" VerticalAlignment="Center"
+                                       Foreground="#E65100" FontWeight="Bold" FontSize="11"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Přiřazení do třídy -->
                     <StackPanel Orientation="Horizontal" Spacing="5" VerticalAlignment="Center">
-                        <TextBlock Text="Třída:" VerticalAlignment="Center" FontSize="12" Foreground="#888"/>
-                        <ComboBox Name="ClassComboBox" Width="100"/>
+                        <TextBlock Text="Třída:" VerticalAlignment="Center" FontSize="12" Foreground="{DynamicResource TextHint}"/>
+                        <ComboBox Name="ClassComboBox" Width="90"/>
+                        <Button Name="ZmenaTridy" Content="Přiřadit"
+                                Background="#E65100" Foreground="White"
+                                Padding="8,3" FontSize="12" CornerRadius="4" IsEnabled="False"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
-            <Button Grid.Column="1" Name="DeleteStudentButton" Content="Smazat studenta" Classes="danger" VerticalAlignment="Top"/>
+
+            <Button Grid.Column="1" Name="DeleteStudentButton" Content="Smazat studenta"
+                    Classes="danger" VerticalAlignment="Top"/>
         </Grid>
 
-        <ScrollViewer Grid.Row="1">
-            <StackPanel Spacing="20">
+        <!-- Obsah: průměry | historie (roztažená) | formulář -->
+        <Grid Grid.Row="1" RowDefinitions="Auto, *, Auto">
 
-                <!-- Celkový průměr a varování -->
-                <Border Background="White" CornerRadius="8" Padding="20" BoxShadow="0 2 5 0 #15000000">
-                    <StackPanel Orientation="Horizontal" Spacing="20">
-                        <StackPanel>
-                            <TextBlock Text="Celkový průměr:" FontSize="14" Foreground="#777"/>
-                            <TextBlock Name="PrumerText" FontSize="36" FontWeight="ExtraBold" Foreground="#2D5A27"/>
-                        </StackPanel>
-                        <Border Name="WarningBorder"
-                                Background="#FFF3E0" BorderBrush="#FFE0B2" BorderThickness="1"
-                                CornerRadius="4" Padding="10" VerticalAlignment="Center" IsVisible="False">
-                            <StackPanel Orientation="Horizontal" Spacing="10">
-                                <Path Data="M12 2L1 21h22L12 2zm0 3.45L19.53 19H4.47L12 5.45zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"
-                                      Fill="#F57C00" Width="20" Height="20" Stretch="Uniform"/>
-                                <TextBlock Text="PROSPĚCH OHROŽEN" VerticalAlignment="Center"
-                                           Foreground="#E65100" FontWeight="Bold" FontSize="12"/>
-                            </StackPanel>
-                        </Border>
-                    </StackPanel>
-                </Border>
-
-                <!-- Průměry podle předmětů – kliknutím se filtruje historie -->
+            <!-- Průměry podle předmětů v kompaktní mřížce -->
+            <StackPanel Grid.Row="0" Spacing="8" Margin="0,0,0,12">
                 <StackPanel Orientation="Horizontal" Spacing="10">
-                    <TextBlock Text="Průměry podle předmětů:" FontSize="16" FontWeight="Bold" Foreground="#555"/>
-                    <TextBlock Text="(kliknutím filtrujte historii)" FontSize="12" Foreground="#999" VerticalAlignment="Center"/>
+                    <TextBlock Text="Průměry podle předmětů:" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource TextSecondary}"/>
+                    <TextBlock Text="(kliknutím filtrujte historii)" FontSize="12" Foreground="{DynamicResource TextHint}" VerticalAlignment="Center"/>
                 </StackPanel>
                 <ListBox Name="SubjectAveragesListBox"
                          SelectionMode="Multiple,Toggle"
-                         Background="Transparent"
-                         BorderThickness="0">
+                         Background="Transparent" BorderThickness="0">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate x:DataType="tridy:SubjectAverage">
-                            <Border Margin="0,0,0,8" Padding="15,10" Background="White" CornerRadius="6"
-                                    BorderThickness="2" BorderBrush="#EEE" Cursor="Hand"
+                            <Border Margin="0,0,6,6" Padding="12,8" Background="{DynamicResource KartaPozadi}" CornerRadius="6"
+                                    BorderThickness="2" BorderBrush="{DynamicResource OkrajBarva}" Cursor="Hand"
                                     Classes.ohrozen="{Binding JeOhrozen}"
                                     Classes.vybrano="{Binding $parent[ListBoxItem].IsSelected}">
                                 <Grid ColumnDefinitions="*, Auto">
-                                    <TextBlock Text="{Binding Predmet}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Predmet}" FontWeight="SemiBold" VerticalAlignment="Center" FontSize="13"/>
                                     <TextBlock Grid.Column="1" Text="{Binding Prumer, StringFormat={}{0:0.00}}"
-                                               FontSize="18" FontWeight="Bold" Foreground="#2D5A27"/>
+                                               FontSize="16" FontWeight="Bold" Foreground="#2D5A27"/>
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+            </StackPanel>
 
-                <!-- Historie známek – nadpis se mění podle aktivního filtru -->
-                <TextBlock Name="ZnamkyNadpis" Text="Historie všech známek:"
-                           FontSize="16" FontWeight="Bold" Foreground="#555"/>
-                <Border Background="White" CornerRadius="8" Padding="10" BoxShadow="0 2 5 0 #15000000">
-                    <ListBox Name="ZnamkyListBox" MaxHeight="300" Background="Transparent" BorderThickness="0">
+            <!-- Historie známek – vyplní zbývající prostor, scrollbar jen zde -->
+            <Grid Grid.Row="1" RowDefinitions="Auto, *" Margin="0,0,0,12">
+                <TextBlock Grid.Row="0" Name="ZnamkyNadpis" Text="Historie všech známek:"
+                           FontSize="15" FontWeight="Bold" Foreground="{DynamicResource TextSecondary}" Margin="0,0,0,8"/>
+                <Border Grid.Row="1" Background="{DynamicResource KartaPozadi}" CornerRadius="8" Padding="10"
+                        BoxShadow="0 2 5 0 #15000000">
+                    <ListBox Name="ZnamkyListBox" Background="Transparent" BorderThickness="0">
                         <ListBox.ItemTemplate>
                             <DataTemplate x:DataType="tridy:Znamka">
                                 <Grid ColumnDefinitions="Auto, *, Auto">
@@ -114,7 +129,7 @@
                                         <Border Width="30" Height="30" CornerRadius="15" Tag="{Binding Hodnota}">
                                             <Border.Styles>
                                                 <Style Selector="Border">
-                                                    <Setter Property="Background" Value="#F0F0F0"/>
+                                                    <Setter Property="Background" Value="{DynamicResource ZnamkaKruzekPozadi}"/>
                                                 </Style>
                                                 <Style Selector="Border[Tag=5]">
                                                     <Setter Property="Background" Value="#E57373"/>
@@ -123,27 +138,74 @@
                                                     <Setter Property="Foreground" Value="White"/>
                                                 </Style>
                                             </Border.Styles>
-                                            <TextBlock Text="{Binding Hodnota}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Hodnota}" VerticalAlignment="Center"
+                                                       HorizontalAlignment="Center" FontWeight="Bold"/>
                                         </Border>
-                                        <TextBlock Text="{Binding VahaText}" FontSize="10" Foreground="#888" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding VahaText}" FontSize="10"
+                                                   Foreground="{DynamicResource TextHint}" HorizontalAlignment="Center"/>
                                     </StackPanel>
                                     <StackPanel Grid.Column="1" Spacing="2" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Predmet.Nazev}" VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding MetadataText}" FontSize="11" Foreground="#888" FontStyle="Italic"/>
+                                        <TextBlock Text="{Binding MetadataText}" FontSize="11"
+                                                   Foreground="{DynamicResource TextHint}" FontStyle="Italic"/>
                                     </StackPanel>
-                                    <Button Grid.Column="2" Content="Smazat" Background="#E57373" Foreground="White" FontSize="10"
+                                    <Button Grid.Column="2" Content="Smazat" Background="#E57373"
+                                            Foreground="White" FontSize="10"
                                             Click="DeleteMark_Click" Tag="{Binding}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Border>
+            </Grid>
 
+            <!-- Formulář pro přidání / úpravu známky -->
+            <StackPanel Grid.Row="2" Spacing="8">
+                <TextBlock Name="FormNadpis" Text="Přidat novou známku:" FontSize="15" FontWeight="Bold" Foreground="{DynamicResource TextSecondary}"/>
+                <Border Background="{DynamicResource KartaPozadi}" CornerRadius="8" Padding="15" BoxShadow="0 2 5 0 #15000000">
+                    <StackPanel Spacing="10">
+                        <Grid ColumnDefinitions="*, Auto, Auto, Auto" ColumnSpacing="10">
+                            <StackPanel Grid.Column="0" Spacing="5">
+                                <TextBlock Text="Předmět:" FontSize="13"/>
+                                <ComboBox Name="NovyPredmetComboBox" HorizontalAlignment="Stretch"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="5">
+                                <TextBlock Text="Datum:" FontSize="13"/>
+                                <DatePicker Name="NovyDatumPicker" DayFormat="ddd dd"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" Spacing="5">
+                                <TextBlock Text="Známka (1–5):" FontSize="13"/>
+                                <TextBox Name="NovaZnamkaTextBox" PlaceholderText="Např. 1" Width="80"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="3" Spacing="5">
+                                <TextBlock Text="Váha:" FontSize="13"/>
+                                <ComboBox Name="NovaVahaComboBox" Width="75"/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="Poznámka (téma, druh zkoušení, …):" FontSize="13"/>
+                            <TextBox Name="NovaPoznamkaTextBox" PlaceholderText="Např. Písemka z rovnic" MaxLength="200"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*, Auto, Auto" ColumnSpacing="8">
+                            <TextBlock Name="NovaPridatValidation"
+                                       Text="Vyberte předmět a zadejte správnou známku (1–5)."
+                                       Foreground="OrangeRed" FontSize="12" IsVisible="False"
+                                       VerticalAlignment="Center"/>
+                            <Button Grid.Column="1" Name="ZrusitEditaciButton" Content="Zrušit"
+                                    Background="#888" Foreground="White" Padding="10,5" CornerRadius="4"
+                                    IsVisible="False"/>
+                            <Button Grid.Column="2" Name="PridatZnamkuButton" Content="Přidat známku"
+                                    Background="#2D5A27" Foreground="White" Padding="12,5" CornerRadius="4"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </StackPanel>
-        </ScrollViewer>
 
+        </Grid>
+
+        <!-- Patička -->
         <Button Grid.Row="2" Name="CloseButton" Content="Zavřít"
-                HorizontalAlignment="Right" Width="100" Margin="0,20,0,0"
+                HorizontalAlignment="Right" Width="100" Margin="0,15,0,0"
                 Background="#2D5A27" Foreground="White"/>
 
     </Grid>

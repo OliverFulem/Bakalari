@@ -1,5 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
+using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using Bakalari.Logika;
@@ -86,22 +88,7 @@ public partial class MainWindow : Window
                 ZobrazStav("Nejprve vyberte studenta ze seznamu.", jeChyba: true);
                 return;
             }
-
-            var student = _vybranyStudent;
-            var okno = new PodrobnostiStudentaOkno(student, _skola.Tridy.Select(t => t.Nazev));
-            await okno.ShowDialog(this);
-
-            if (okno.IsDeleted)
-            {
-                ZobrazStav($"Student {student.Jmeno} {student.Prijmeni} byl smazán.");
-                _skola.Studenti.Remove(student);
-            }
-            else
-            {
-                ZobrazStav("Změny uloženy.");
-            }
-
-            SpravceDat.Ulozit(_skola);
+            await OtevritDetailStudenta(_vybranyStudent);
         };
 
         ExportButton.Click += async (sender, e) =>
@@ -144,17 +131,31 @@ public partial class MainWindow : Window
     /// </summary>
     private void NastavitSledovaniZmen()
     {
-        // Přihlásíme sledování známek pro studenty, kteří jsou načteni ze souboru.
+        // Přihlásíme sledování změn pro studenty načtené ze souboru.
         foreach (var student in _skola.Studenti)
-            student.Znamky.CollectionChanged += (_, _) => AktualizujSeznam();
+            PrihlasitStudenta(student);
 
-        // Když přibyde nový student, přihlásíme sledování i jeho nových známek.
+        // Když přibyde nový student, přihlásíme sledování i jeho změn.
         _skola.Studenti.CollectionChanged += (s, e) =>
         {
             if (e.NewItems != null)
                 foreach (Student student in e.NewItems)
-                    student.Znamky.CollectionChanged += (_, _) => AktualizujSeznam();
+                    PrihlasitStudenta(student);
             AktualizujSeznam();
+        };
+    }
+
+    /// <summary>
+    /// Přihlásí odběr změn jednoho studenta:
+    /// přidání/odebrání známky a změna třídy okamžitě aktualizují seznam v hlavním okně.
+    /// </summary>
+    private void PrihlasitStudenta(Student student)
+    {
+        student.Znamky.CollectionChanged += (_, _) => AktualizujSeznam();
+        student.PropertyChanged += (_, e) =>
+        {
+            if (e.PropertyName == nameof(Student.Trida))
+                AktualizujSeznam();
         };
     }
 
@@ -163,6 +164,38 @@ public partial class MainWindow : Window
     /// Zapamatuje vybraného studenta a zruší výběr ve všech ostatních ListBoxech,
     /// aby nemohlo být vybráno více studentů najednou (každá třída má vlastní ListBox).
     /// </summary>
+    /// <summary>
+    /// Otevře kartu studenta – sdílená logika pro tlačítko i dvojklik.
+    /// </summary>
+    private async Task OtevritDetailStudenta(Student student)
+    {
+        var okno = new PodrobnostiStudentaOkno(student, _skola.Tridy);
+        await okno.ShowDialog(this);
+
+        if (okno.IsDeleted)
+        {
+            ZobrazStav($"Student {student.Jmeno} {student.Prijmeni} byl smazán.");
+            _skola.Studenti.Remove(student);
+        }
+        else
+        {
+            ZobrazStav("Změny uloženy.");
+        }
+
+        AktualizujSeznam();
+        SpravceDat.Ulozit(_skola);
+    }
+
+    /// <summary>
+    /// Dvojklik na studenta v seznamu otevře jeho kartu.
+    /// </summary>
+    private async void StudentListBox_DoubleTapped(object? sender, TappedEventArgs e)
+    {
+        if (_vybranyStudent == null) return;
+        VycistiStav();
+        await OtevritDetailStudenta(_vybranyStudent);
+    }
+
     private void StudentListBox_SelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (sender is ListBox lb && lb.SelectedItem is Student student)
