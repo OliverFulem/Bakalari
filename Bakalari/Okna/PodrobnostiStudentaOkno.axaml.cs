@@ -75,7 +75,7 @@ public partial class PodrobnostiStudentaOkno : Window
         {
             if (ClassComboBox.SelectedItem is not string novaTrida) return;
 
-            // Zjistíme, které předměty nová třída nemá, a které known by se tím ztratily.
+            // Zjistíme, které předměty nová třída nemá, a které známé by se tím ztratily.
             var predmetyNoveTridy = _tridy
                 .FirstOrDefault(t => t.Nazev == novaTrida)?.Predmety.ToHashSet()
                 ?? new HashSet<string>();
@@ -86,17 +86,17 @@ public partial class PodrobnostiStudentaOkno : Window
 
             if (znamkyKeSmazani.Count > 0)
             {
-                // Sestavíme přehled: "Matematika (3 known), ICT (2 known)"
+                // Sestavíme přehled: "Matematika (3 známé), ICT (2 známé)"
                 var prehled = znamkyKeSmazani
                     .GroupBy(z => z.Predmet.Nazev)
-                    .Select(g => $"{g.Key} ({g.Count()} {(g.Count() == 1 ? "známka" : g.Count() < 5 ? "známky" : "known")})")
+                    .Select(g => $"{g.Key} ({g.Count()} {(g.Count() == 1 ? "známka" : g.Count() < 5 ? "známky" : "známé")})")
                     .ToList();
 
                 var zprava =
                     $"Třída \"{novaTrida}\" nemá tyto předměty, ze kterých má student/ka hodnocení:\n" +
                     $"  • {string.Join("\n  • ", prehled)}\n\n" +
                     $"Přeřazením bude nevratně smazáno {znamkyKeSmazani.Count} " +
-                    $"{(znamkyKeSmazani.Count == 1 ? "known" : "known")}. Chcete pokračovat?";
+                    $"{(znamkyKeSmazani.Count == 1 ? "známé" : "známé")}. Chcete pokračovat?";
 
                 var potvrzeno = await ZobrazPotvrzeni(zprava);
                 if (!potvrzeno)
@@ -125,6 +125,21 @@ public partial class PodrobnostiStudentaOkno : Window
         ZrusitEditaciButton.Click += (s, e) => ZnamkyListBox.SelectedItem = null;
 
         NovaZnamkaTextBox.KeyDown += (s, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Enter)
+                UlozitZnamku();
+        };
+        
+        this.KeyDown += (sender, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Escape)
+            {
+                e.Handled = true;
+                Close();
+            }
+        };
+        
+        this.KeyDown += (sender, e) =>
         {
             if (e.Key == Avalonia.Input.Key.Enter)
                 UlozitZnamku();

@@ -18,7 +18,10 @@
         </Style>
         <Style Selector="Border.vybrano">
             <Setter Property="BorderBrush" Value="#2D5A27"/>
-            <Setter Property="Background" Value="#E8F5E9"/>
+            <Setter Property="Background" Value="#6B8B9B"/>
+        </Style>
+        <Style Selector="Border.vybrano TextBlock">
+            <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style Selector="Border.ohrozen.vybrano">
             <Setter Property="BorderBrush" Value="#C62828"/>

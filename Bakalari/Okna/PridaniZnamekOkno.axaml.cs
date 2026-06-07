@@ -56,6 +56,15 @@ public partial class PridaniZnamekOkno : Window
             if (e.Key == Avalonia.Input.Key.Enter)
                 UlozitZnamku();
         };
+        
+        this.KeyDown += (sender, e) =>
+        {
+            if (e.Key == Avalonia.Input.Key.Escape)
+            {
+                e.Handled = true;
+                Close();
+            }
+        };
     }
 
     /// <summary>
